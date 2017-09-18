@@ -71,10 +71,20 @@ clearTasks() {
   let tasks = this.state.tasks;
   let i = tasks.length;
   while(i--){
-    if(task[i].completed === true){
-      let id=task[i]._id.$oid;
+    if(tasks[i].completed === true){
+      let id=tasks[i]._id.$oid;
+      tasks.splice(i, 1);
+      axios.request({
+        method: 'delete',
+        url: 'https://api.mlab.com/api/1/databases/reacttaksk/collections/tasks/'+id+'?apiKey=BYsJbIb6tp9TGV-wRmkH_KHCPnbIS-O4'
+      }).then((response) => {
+
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }
+  this.setState({tasks: tasks});
 }
 
   render() {
